@@ -27,7 +27,7 @@ git clone https://github.com/Bhushanmv007/Tic-Tac-Toe-2.0.git
 ```
 2. **Navigate to the project directory:**
 ``` bash
-cd tic tac toe 2.0
+cd Tic-Tac-Toe-2.0
 ```
 3. **Run the game:**
 ```bash 
