@@ -31,5 +31,5 @@ cd Tic-Tac-Toe-2.0
 ```
 3. **Run the game:**
 ```bash 
-python tic_tac_toe.py
+python tictactoe.py
 ```
