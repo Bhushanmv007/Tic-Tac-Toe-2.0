@@ -1,6 +1,6 @@
 # Tic Tac Toe 2.0 🎮 
 ## Overview
-This is a modern take on the classic Tic Tac Toe game, built using Python and Tkinter. The game features a unique twist: on every 4th turn, each player's 1st move is discarded, adding an extra layer of strategy to the game. This project is perfect for those looking to explore Python GUI development and game logic implementation.
+This is a modern take on the classic Tic Tac Toe game, built using Python and Tkinter. The game introduces an intriguing twist: starting from the 4th move, each player's earliest moves are discarded in sequential order, adding an extra layer of strategy and unpredictability. This feature ensures that as the game progresses, players must adapt their strategies to account for the loss of their previous moves. This project is perfect for those looking to explore Python GUI development and game logic implementation.
 
 ## Key Features
 * **Classic Tic Tac Toe Gameplay:** Simple and intuitive 3x3 grid where two players, X and O, take turns..
