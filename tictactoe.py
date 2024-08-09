@@ -15,7 +15,7 @@ class TicTacToe:
         self.current_player = "X"
         self.board = [["" for _ in range(3)] for _ in range(3)]
         self.buttons = [[None for _ in range(3)] for _ in range(3)]
-        self.move_count = {"X": 0, "O": 0}
+        self.move_lists = {"X": [], "O": []}  # Track moves for each player
 
         # Custom font
         self.custom_font = font.Font(family="Arial", size=24, weight="bold")
@@ -35,10 +35,11 @@ class TicTacToe:
         if self.buttons[i][j]["text"] == "" and self.check_winner() is False:
             self.buttons[i][j]["text"] = self.current_player
             self.board[i][j] = self.current_player
-            self.move_count[self.current_player] += 1
+            self.move_lists[self.current_player].append((i, j))
 
-            if self.move_count[self.current_player] % 4 == 0:
-                self.discard_first_move(self.current_player)
+            # Check if the move needs to discard any previous move
+            if len(self.move_lists[self.current_player]) % 4 == 0:
+                self.discard_move(self.current_player)
 
             if self.check_winner():
                 messagebox.showinfo("Tic Tac Toe", f"Player {self.current_player} wins!")
@@ -49,13 +50,15 @@ class TicTacToe:
             else:
                 self.current_player = "O" if self.current_player == "X" else "X"
 
-    def discard_first_move(self, player):
-        for i in range(3):
-            for j in range(3):
-                if self.board[i][j] == player:
-                    self.board[i][j] = ""
-                    self.buttons[i][j]["text"] = ""
-                    return
+    def discard_move(self, player):
+        # Determine which move to discard
+        move_index = len(self.move_lists[player]) - 4
+        if move_index >= 0:
+            discard_move = self.move_lists[player][move_index]
+            discard_i, discard_j = discard_move
+            self.board[discard_i][discard_j] = ""
+            self.buttons[discard_i][discard_j]["text"] = ""
+            self.move_lists[player].pop(move_index)
 
     def check_winner(self):
         for i in range(3):
@@ -78,7 +81,7 @@ class TicTacToe:
 
     def reset_board(self):
         self.board = [["" for _ in range(3)] for _ in range(3)]
-        self.move_count = {"X": 0, "O": 0}
+        self.move_lists = {"X": [], "O": []}  # Reset move lists
         for i in range(3):
             for j in range(3):
                 self.buttons[i][j]["text"] = ""
