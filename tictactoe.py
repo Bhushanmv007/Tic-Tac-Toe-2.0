@@ -17,21 +17,26 @@ class TicTacToe:
         self.buttons = [[None for _ in range(3)] for _ in range(3)]
         self.move_lists = {"X": [], "O": []}  # Track moves for each player
 
+        # Button dimensions
+        self.button_width = 6
+        self.button_height = 3
+        self.font_size = 20
+
         # Custom fonts
-        self.default_font = font.Font(family="Arial", size=20, weight="bold")
-        self.x_font = font.Font(family="Comic Sans MS", size=20, weight="bold", slant="italic")
-        self.o_font = font.Font(family="Comic Sans MS", size=20, weight="bold", slant="italic")
+        self.default_font = font.Font(family="Arial", size=self.font_size, weight="bold")
+        self.x_font = font.Font(family="Comic Sans MS", size=self.font_size, weight="bold", slant="italic")
+        self.o_font = font.Font(family="Comic Sans MS", size=self.font_size, weight="bold", slant="italic")
 
         # Create buttons with fixed size and consistent font size
         for i in range(3):
             for j in range(3):
                 button = tk.Button(
-                    root, text="", font=self.default_font, width=6, height=3,  # Fixed button size
+                    root, text="", font=self.default_font, width=self.button_width, height=self.button_height,
                     bg='#3e4a61', fg='#f5f5f5', activebackground='#5a6b82', 
                     activeforeground='#f0f0f0', borderwidth=2, relief='raised',
                     command=lambda i=i, j=j: self.button_click(i, j)
                 )
-                button.grid(row=i, column=j, padx=10, pady=10)
+                button.grid(row=i, column=j, padx=5, pady=5)  # Reduced padding
                 button.bind("<Enter>", self.on_enter)
                 button.bind("<Leave>", self.on_leave)
                 self.buttons[i][j] = button
