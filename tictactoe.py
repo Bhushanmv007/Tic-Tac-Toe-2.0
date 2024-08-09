@@ -6,9 +6,9 @@ from tkinter import font
 class TicTacToe:
     def __init__(self, root):
         self.root = root
-        self.root.title("Tic Tac Toe with a Twist")
+        self.root.title("Tic Tac Toe 2.0")
         
-        # Background gradient color
+        # Background color
         self.root.configure(bg='#1e1e2f')
         
         # Game variables
@@ -17,25 +17,42 @@ class TicTacToe:
         self.buttons = [[None for _ in range(3)] for _ in range(3)]
         self.move_lists = {"X": [], "O": []}  # Track moves for each player
 
-        # Custom font
-        self.custom_font = font.Font(family="Arial", size=24, weight="bold")
+        # Custom fonts
+        self.default_font = font.Font(family="Arial", size=20, weight="bold")
+        self.x_font = font.Font(family="Comic Sans MS", size=20, weight="bold", slant="italic")
+        self.o_font = font.Font(family="Comic Sans MS", size=20, weight="bold", slant="italic")
 
-        # Create buttons with enhanced UI
+        # Create buttons with fixed size and consistent font size
         for i in range(3):
             for j in range(3):
-                self.buttons[i][j] = tk.Button(
-                    root, text="", font=self.custom_font, width=5, height=2,
+                button = tk.Button(
+                    root, text="", font=self.default_font, width=6, height=3,  # Fixed button size
                     bg='#3e4a61', fg='#f5f5f5', activebackground='#5a6b82', 
-                    activeforeground='#f0f0f0', borderwidth=0, 
+                    activeforeground='#f0f0f0', borderwidth=2, relief='raised',
                     command=lambda i=i, j=j: self.button_click(i, j)
                 )
-                self.buttons[i][j].grid(row=i, column=j, padx=10, pady=10)
-                
+                button.grid(row=i, column=j, padx=10, pady=10)
+                button.bind("<Enter>", self.on_enter)
+                button.bind("<Leave>", self.on_leave)
+                self.buttons[i][j] = button
+
+    def on_enter(self, event):
+        event.widget.config(bg='#4a5a72', relief='sunken')
+
+    def on_leave(self, event):
+        event.widget.config(bg='#3e4a61', relief='raised')
+
     def button_click(self, i, j):
         if self.buttons[i][j]["text"] == "" and self.check_winner() is False:
             self.buttons[i][j]["text"] = self.current_player
             self.board[i][j] = self.current_player
             self.move_lists[self.current_player].append((i, j))
+
+            # Set the font based on the current player
+            if self.current_player == "X":
+                self.buttons[i][j].config(font=self.x_font)
+            else:
+                self.buttons[i][j].config(font=self.o_font)
 
             # Check if the move needs to discard any previous move
             if len(self.move_lists[self.current_player]) % 4 == 0:
@@ -58,6 +75,7 @@ class TicTacToe:
             discard_i, discard_j = discard_move
             self.board[discard_i][discard_j] = ""
             self.buttons[discard_i][discard_j]["text"] = ""
+            self.buttons[discard_i][discard_j].config(font=self.default_font)  # Reset font
             self.move_lists[player].pop(move_index)
 
     def check_winner(self):
@@ -66,10 +84,10 @@ class TicTacToe:
                 return True
             if self.board[0][i] == self.board[1][i] == self.board[2][i] != "":
                 return True
-        if self.board[0][0] == self.board[1][1] == self.board[2][2] != "":
-            return True
-        if self.board[0][2] == self.board[1][1] == self.board[2][0] != "":
-            return True
+            if self.board[0][0] == self.board[1][1] == self.board[2][2] != "":
+                  return True
+            if self.board[0][2] == self.board[1][1] == self.board[2][0] != "":
+                  return True
         return False
 
     def check_draw(self):
@@ -85,6 +103,7 @@ class TicTacToe:
         for i in range(3):
             for j in range(3):
                 self.buttons[i][j]["text"] = ""
+                self.buttons[i][j].config(font=self.default_font)  # Reset font to default
 
 # Running the game
 root = tk.Tk()
