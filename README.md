@@ -12,8 +12,8 @@ This is a modern take on the classic Tic Tac Toe game, built using Python and Tk
 ## How to Play:
 * The game starts with Player X.
 * Players take turns by clicking on the buttons in the grid to place their symbol (X or O).
-* On every 4th turn, the player’s first move is removed, creating new opportunities and challenges.
-* The game ends when one player achieves three symbols in a row (horizontally, vertically, or diagonally) or if the grid is filled without a winner (a draw).
+* From the 4th move onward, the player’s earliest move is discarded every 4 turns, creating new strategic challenges.
+* The game ends when one player achieves three symbols in a row (horizontally, vertically, or diagonally).
 
 ## Requirements:
 * Python 3.x
